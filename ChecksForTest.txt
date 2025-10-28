@@ -1,0 +1,10 @@
+Среднее арифметическое
+PositiveNumbers
+NegativeNumbers
+WithMixedNumbers
+
+EmptyArray
+NullArray
+
+
+при расчёте несмещённой оценки дисперсии выборки сумма квадратов отклонений делится на число элементов в выборке - 1.
