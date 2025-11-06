@@ -63,3 +63,37 @@ public class SimpleParallelSumV1 {
         System.out.println("Sum of all elements: " + sum);
     }
 }
+
+//вариант3
+import java.util.Random;
+
+public class SimpleSyncParallelSum {
+    static final int SIZE = 1_000_000;
+    static final int THREADS = 4;
+
+    static final int[] data = new int[SIZE];
+    static int sum = 0;                         
+
+    private static synchronized void add(int v) { sum += v; }  // synchronized в метод
+
+    public static void main(String[] args) throws InterruptedException {
+        var rnd = new Random();
+        for (int i = 0; i < SIZE; i++) data[i] = rnd.nextInt(100);   // заполнение массива
+
+        int chunk = (SIZE + THREADS - 1) / THREADS;                  
+        Thread[] threads  = new Thread[THREADS];
+
+        for (int i = 0; i < THREADS; i++) {
+            final int start = i * chunk, end = Math.min(SIZE, start + chunk);
+            ts[i] = new Thread(() -> {
+                int local = 0;
+                for (int j = start; j < end; j++) local += data[j];  // локальная сумма без синхронизации
+                add(local);                                          // вход в synchronized
+            }, "worker-" + i);
+            threads [i].start();
+        }
+
+        for (Thread t : threads ) t.join();                                // цикл for each
+        System.out.println("Sum of all elements: " + sum);
+    }
+}
