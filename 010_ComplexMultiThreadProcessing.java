@@ -56,7 +56,7 @@ public class SimpleParallelSumV1 {
     static final int SIZE = 1_000_000;
 
     public static void main(String[] args) {
-        int sum = ThreadLocalRandom.current()
+        int sum = ThreadLocalRandom.current() //генератор случайных чисел, для многопоточности
                 .ints(SIZE, 0, 100)   // генерация чисел
                 .parallel()           // параллельное выполнение (потоков будет столько сколько даст общий ForkJoinPool)
                 .sum();               
